@@ -13,7 +13,7 @@ public static class Floq{
     /// <returns>Vector3.Coh</returns>
     public static Vector3 getCohesion(Vector3 Origin, Vector3 Destiny)
     {
-        return Destiny - Origin;
+        return (Destiny - Origin).normalized;
     }
     /// <summary>
     /// Retorna el vector de cohecion promedio entre un objeto y varios objetivos.
@@ -26,7 +26,8 @@ public static class Floq{
         Vector3 coh = new Vector3();
         foreach (var Destiny in Objetives)
             coh += Destiny - Origin;
-        return coh /= Objetives.Count;
+        coh /= Objetives.Count;
+        return coh.normalized;
     }
 
     //Calcular Separacion.
@@ -44,7 +45,7 @@ public static class Floq{
         float mag = DesiredSep - Sep.magnitude;
         Sep.Normalize();
         Sep *= mag;
-        return Sep;
+        return Sep.normalized;
     }
     /// <summary>
     /// Calcula el vector Separacion promedio entre un objeto y una lista de "amigos".
@@ -64,7 +65,8 @@ public static class Floq{
             ItemSep *= mag;
             Sep += ItemSep;
         }
-        return Sep /= Friends.Count;
+        Sep /= Friends.Count;
+        return Sep.normalized;
     }
 
     //Calcular Alineacion.
@@ -81,7 +83,7 @@ public static class Floq{
         foreach (var Forwards in Friends)
             Alig += Forwards;
         Alig /= Friends.Count;
-        return Alig;
+        return Alig.normalized;
     }
     /// <summary>
     /// Calcula el vector Alineacion entre un objeto y una lista de "Amigos".
@@ -95,6 +97,6 @@ public static class Floq{
         foreach (var Transform in Friends)
             Alignment += Transform.forward;
         Alignment /= Friends.Count;
-        return Alignment;
+        return Alignment.normalized;
     }
 }
